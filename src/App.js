@@ -56,7 +56,9 @@ class App extends Component {
                     type='text' 
                     value={searchTerm}
                     onChange={this.onSearchChange}
-                />
+                >
+                    Search: 
+                </Search>
             
                 <Table 
                     list={list}
@@ -84,9 +86,10 @@ class App extends Component {
 // }
 
 const Search = (props) => {
-    const {value, onChange} = props;
+    const {value, onChange, children} = props;
     return (
         <form>
+            {children}
             <input 
                 type='text' 
                 value={value}
