@@ -85,9 +85,8 @@ class App extends Component {
 //     }
 // }
 
-const Search = (props) => {
-    const {value, onChange, children} = props;
-    return (
+const Search = ({value, onChange, children}) => {
+    return(
         <form>
             <strong>{children}</strong>
             <input 
@@ -98,6 +97,7 @@ const Search = (props) => {
         </form>
     );
 }
+
 
 // class Table extends React.Component {
 //     render(){
@@ -127,8 +127,7 @@ const Search = (props) => {
 //     }
 // }
 
-const Table = (props) => {
-    const {list, pattern, onDismiss} = props;
+const Table = ({list, pattern, onDismiss}) => {
     return(
         <div>
             {list.filter(isSearched(pattern)).map((item)=>
@@ -150,8 +149,7 @@ const Table = (props) => {
     );
 }
 
-const Button = (props) => {
-    const {onClick,className='',children} = props;
+const Button = ({onClick,className='',children}) => {
     return (
         <button
             onClick={onClick}
