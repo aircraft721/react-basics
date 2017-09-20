@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import './App.css';
 
@@ -25,7 +25,7 @@ const isSearched = (searchTerm) => (item) => {
     return !searchTerm || item.title.toLowerCase().includes(searchTerm.toLowerCase());
 }
 
-class App extends Component {
+class App extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -51,15 +51,16 @@ class App extends Component {
         const {searchTerm, list} = this.state;
 
         return (
-            <div className="App">
-                <Search 
-                    type='text' 
-                    value={searchTerm}
-                    onChange={this.onSearchChange}
-                >
-                    Search: 
-                </Search>
-            
+            <div className="page">
+                <div className='interactions'>
+                    <Search 
+                        type='text' 
+                        value={searchTerm}
+                        onChange={this.onSearchChange}
+                    >
+                        Search: 
+                    </Search>
+                </div>
                 <Table 
                     list={list}
                     pattern={searchTerm}
@@ -129,9 +130,9 @@ const Search = ({value, onChange, children}) => {
 
 const Table = ({list, pattern, onDismiss}) => {
     return(
-        <div>
+        <div className='table'>
             {list.filter(isSearched(pattern)).map((item)=>
-                <div key={item.objectID}>
+                <div key={item.objectID} className='table-row'>
                     <span>
                         <a href={item.url}>{item.title}</a>
                     </span>
