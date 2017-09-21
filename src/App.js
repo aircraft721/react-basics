@@ -2,7 +2,7 @@ import React from 'react';
 
 import './App.css';
 
-const DEFAULT_QUERY = 'redux';
+const DEFAULT_QUERY = 'react';
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
@@ -118,11 +118,14 @@ class App extends React.Component {
                         Search: 
                     </Search>
                 </div>
-                <Table 
-                    list={result.hits}
-                    pattern={searchTerm}
-                    onDismiss={this.onDismiss}
-                />
+                {result
+                    ? <Table 
+                        list={result.hits}
+                        pattern={searchTerm}
+                        onDismiss={this.onDismiss}
+                    />
+                    : null
+                }
             </div>
         );
     }
