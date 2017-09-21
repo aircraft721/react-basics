@@ -71,6 +71,7 @@ class App extends React.Component {
         this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
         this.onDismiss = this.onDismiss.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
+        this.onSearchSubmit = this.onSearchSubmit.bind(this); 
     }
 
     setSearchTopStories(result){
@@ -100,6 +101,12 @@ class App extends React.Component {
         this.setState({searchTerm: event.currentTarget.value})
     }
 
+    onSearchSubmit(event){
+        const {searchTerm} = this.state;
+        this.fetchSearchTopStories(searchTerm);
+        event.preventDefault();
+    }
+
     render() {
         const {searchTerm, result} = this.state;
 
@@ -111,9 +118,9 @@ class App extends React.Component {
             <div className="page">
                 <div className='interactions'>
                     <Search 
-                        type='text' 
                         value={searchTerm}
                         onChange={this.onSearchChange}
+                        onSubmit={this.onSearchSubmit}
                     >
                         Search: 
                     </Search>
@@ -121,7 +128,7 @@ class App extends React.Component {
                 {result &&
                     <Table 
                         list={result.hits}
-                        pattern={searchTerm}
+                        
                         onDismiss={this.onDismiss}
                     />
                 }
@@ -131,24 +138,27 @@ class App extends React.Component {
 }
 
 
-const Search = ({value, onChange, children}) => {
+const Search = ({value, onChange, onSubmit, children}) => {
     return(
-        <form>
+        <form onSubmit={onSubmit}>
             <strong>{children}</strong>
             <input 
                 type='text' 
                 value={value}
                 onChange={onChange}
             />
+            <button type='submit'>
+                {children}
+            </button>
         </form>
     );
 }
 
 
-const Table = ({list, pattern, onDismiss}) => {
+const Table = ({list, onDismiss}) => {
     return(
         <div className='table'>
-            {list.filter(isSearched(pattern)).map((item)=>
+            {list.map((item)=>
                 <div key={item.objectID} className='table-row'>
                     <span>
                         <a href={item.url}>{item.title}</a>
