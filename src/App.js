@@ -90,8 +90,10 @@ class App extends React.Component {
     }
 
     onDismiss(id){
-        const updatedList = this.state.result.hits.filter(item => item.objectID !== id);
-        this.setState({list: updatedList});
+        const updatedHits = this.state.result.hits.filter(item => item.objectID !== id);
+        this.setState({
+            result: Object.assign({}, this.state.result, {hits: updatedHits})
+        });
     }
 
     onSearchChange(event){
@@ -99,9 +101,8 @@ class App extends React.Component {
     }
 
     render() {
-        
-
         const {searchTerm, result} = this.state;
+
         if(!result){
             return null;
         }
