@@ -1,15 +1,21 @@
 import React from 'react';
-
 import './App.css';
+import {
+     DEFAULT_QUERY,
+     DEFAULT_PAGE,
+     PATH_BASE,
+     PATH_SEARCH,
+     PARAM_SEARCH,
+     PARAM_PAGE,
+     DEFAULT_HPP,
+     PARAM_HPP
+} from './constants/index';
 
-const DEFAULT_QUERY = 'react';
-const DEFAULT_PAGE = 0;
-const PATH_BASE = 'https://hn.algolia.com/api/v1';
-const PATH_SEARCH = '/search';
-const PARAM_SEARCH = 'query=';
-const PARAM_PAGE = 'page=';
-const DEFAULT_HPP = '10';
-const PARAM_HPP = 'hitsPerPage=';
+import Button from './components/Button';
+import Search from './components/Search';
+import Table from './components/Table';
+
+
 
 class App extends React.Component {
     constructor(props){
@@ -116,58 +122,5 @@ class App extends React.Component {
         );
     }
 }
-
-
-const Search = ({value, onChange, onSubmit, children}) => {
-    return(
-        <form onSubmit={onSubmit}>
-            <strong>{children}</strong>
-            <input 
-                type='text' 
-                value={value}
-                onChange={onChange}
-            />
-            <button type='submit'>
-                {children}
-            </button>
-        </form>
-    );
-}
-
-
-const Table = ({list, onDismiss}) => {
-    return(
-        <div className='table'>
-            {list.map((item)=>
-                <div key={item.objectID} className='table-row'>
-                    <span>
-                        <a href={item.url}>{item.title}</a>
-                    </span>
-                    <span>{item.author}</span>
-                    <span>{item.num_comments}</span>
-                    <span>{item.points}</span>
-                    <span>
-                        <Button onClick={()=>onDismiss(item.objectID)}>
-                            Anihilate
-                        </Button>
-                    </span>
-                </div>                    
-            )}
-        </div>
-    );
-}
-
-const Button = ({onClick,className='',children}) => {
-    return (
-        <button
-            onClick={onClick}
-            className={className}
-            type="button"
-        >
-            {children}
-        </button>
-    );
-}
-
 
 export default App;

@@ -1,18 +1,19 @@
 import React from 'react';
 
-class Search extends React.Component {
-    render(){
-        const {value, onChange} = this.props;
-        return (
-            <form>
-                <input 
-                    type='text' 
-                    value={value}
-                    onChange={onChange}
-                />
-            </form>
-        );
-    }
+const Search = ({value, onChange, onSubmit, children}) => {
+    return(
+        <form onSubmit={onSubmit}>
+            <strong>{children}</strong>
+            <input 
+                type='text' 
+                value={value}
+                onChange={onChange}
+            />
+            <button type='submit'>
+                {children}
+            </button>
+        </form>
+    );
 }
 
 export default Search;
