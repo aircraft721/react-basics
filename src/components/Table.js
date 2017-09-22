@@ -2,27 +2,31 @@ import React from 'react';
 import Button from './Button';
 import PropTypes from 'prop-types';
 
-const Table = ({list, onDismiss}) => {
-    return(
-        <div className='table'>
-            {list.map((item)=>
-                <div key={item.objectID} className='table-row'>
-                    <span>
-                        <a href={item.url}>{item.title}</a>
-                    </span>
-                    <span>{item.author}</span>
-                    <span>{item.num_comments}</span>
-                    <span>{item.points}</span>
-                    <span>
-                        <Button onClick={()=>onDismiss(item.objectID)}>
-                            Anihilate
-                        </Button>
-                    </span>
-                </div>                    
-            )}
-        </div>
-    );
+class Table extends React.Component {
+    render(){
+        const {list, onDismiss} = this.props;
+        return(
+            <div className='table'>
+                {list.map((item)=>
+                    <div key={item.objectID} className='table-row'>
+                        <span>
+                            <a href={item.url}>{item.title}</a>
+                        </span>
+                        <span>{item.author}</span>
+                        <span>{item.num_comments}</span>
+                        <span>{item.points}</span>
+                        <span>
+                            <Button onClick={()=>onDismiss(item.objectID)}>
+                                Anihilate
+                            </Button>
+                        </span>
+                    </div>                    
+                )}
+            </div>
+        );
+    }
 }
+
 
 Table.propTypes = {
     list: PropTypes.arrayOf(
