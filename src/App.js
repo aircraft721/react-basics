@@ -17,7 +17,11 @@ import Button from './components/Button';
 import Search from './components/Search';
 import Table from './components/Table';
 
-
+const Loading = () => {
+    return(
+        <div>Loading ...</div>
+    );
+}
 
 class App extends React.Component {
     constructor(props){
@@ -26,6 +30,7 @@ class App extends React.Component {
             results: null,
             searchKey: '',
             searchTerm: DEFAULT_QUERY,
+            isLoading: false,
         };
 
         this.setSearchTopStories = this.setSearchTopStories.bind(this);
@@ -48,6 +53,8 @@ class App extends React.Component {
 
 
     fetchSearchTopStories(searchTerm,page){
+        this.setState({isLoading: true});
+
         fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
             .then(response => response.json())
             .then(result => this.setSearchTopStories(result))
@@ -64,7 +71,8 @@ class App extends React.Component {
             results: {
                 ...results,
                 [searchKey]: {hits: updatedHits, page}
-            }
+            },
+            isLoading: false
         });
     }
 
@@ -95,7 +103,7 @@ class App extends React.Component {
     }
 
     render() {
-        const {searchTerm, results, searchKey} = this.state;
+        const {searchTerm, results, searchKey, isLoading} = this.state;
         const page = (results && results[searchKey] && results[searchKey].page) || 0;
         const list = (results && results[searchKey] && results[searchKey].hits) || [];
 
@@ -115,9 +123,14 @@ class App extends React.Component {
                         onDismiss={this.onDismiss}
                     />
                 <div className='interactions'>
+                    {isLoading 
+                    ? 
+                    <Loading />
+                    :
                     <Button onClick={()=>this.fetchSearchTopStories(searchKey,page+1)}>
                         More
                     </Button>
+                    }
                 </div>
                 
             </div>
