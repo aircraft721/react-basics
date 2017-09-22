@@ -23,6 +23,16 @@ const Loading = () => {
     );
 }
 
+const withLoading = (Component) => ({isLoading, ...rest}) => {
+    return (
+        isLoading ? <Loading /> : <Component {...rest} />
+    );
+}
+
+const ButtonWithLoading = withLoading(Button);
+
+
+
 class App extends React.Component {
     constructor(props){
         super(props);
@@ -123,14 +133,12 @@ class App extends React.Component {
                         onDismiss={this.onDismiss}
                     />
                 <div className='interactions'>
-                    {isLoading 
-                    ? 
-                    <Loading />
-                    :
-                    <Button onClick={()=>this.fetchSearchTopStories(searchKey,page+1)}>
+                    <ButtonWithLoading
+                        isLoading={isLoading}
+                        onClick={()=>this.fetchSearchTopStories(searchKey,page+1)}>
                         More
-                    </Button>
-                    }
+                    </ButtonWithLoading>
+                    
                 </div>
                 
             </div>
